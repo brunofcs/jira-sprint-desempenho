@@ -1,0 +1,42 @@
+<atlassian-plugin key="${project.groupId}.${project.artifactId}" name="${project.name}" plugins-version="2">
+  <plugin-info>
+    <description>${project.description}</description>
+    <version>${project.version}</version>
+    <vendor name="${project.organization.name}" url="${project.organization.url}" />
+    <param name="plugin-icon">images/pluginIcon.png</param>
+    <param name="plugin-logo">images/pluginLogo.png</param>
+  </plugin-info>
+
+  <gadget key="tutorial-gadget" name="JIRA Tutorial Gadget" location="gadget.xml"/>
+
+  <!-- add our i18n resource -->
+  <resource type="i18n" name="i18n" location="jira-gadget-tutorial-plugin"/>
+
+  <resource type="download" name="i18n/ALL_ALL.xml" location="i18n/ALL_ALL.xml">
+    <param name="content-type" value="text/xml; charset=UTF-8"/>
+  </resource>
+
+  <!-- add our web resources -->
+  <web-resource key="jira-gadget-tutorial-plugin-resources" name="jira-gadget-tutorial-plugin Web Resources">
+    <dependency>com.atlassian.auiplugin:ajs</dependency>
+
+    <resource type="download" name="jira-gadget-tutorial-plugin.css" location="/css/jira-gadget-tutorial-plugin.css"/>
+    <resource type="download" name="jira-gadget-tutorial-plugin.js" location="/js/jira-gadget-tutorial-plugin.js"/>
+    <resource type="download" name="images/" location="/images"/>
+
+    <context>jira-gadget-tutorial-plugin</context>
+  </web-resource>
+
+  <!-- publish our component -->
+  <component key="myPluginComponent" class="com.atlassian.plugins.tutorial.MyPluginComponentImpl" public="true">
+    <interface>com.atlassian.plugins.tutorial.MyPluginComponent</interface>
+  </component>
+
+  <rest name="My Rest Resource" i18n-name-key="my-rest-resource.name" key="my-rest-resource" path="/myrestresource" version="1.0">
+    <description key="my-rest-resource.description">The My Rest Resource Plugin</description>
+  </rest>
+
+  <!-- import from the product container -->
+  <component-import key="applicationProperties" interface="com.atlassian.sal.api.ApplicationProperties" />
+
+</atlassian-plugin>

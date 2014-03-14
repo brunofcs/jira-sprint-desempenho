@@ -1,0 +1,36 @@
+
+Para fazer alterações no Plugin
+
+	Executar o Jira no pc com SDK de desenvolvimento
+		Entrar no Diretório do projeto e executar: atlas-run
+	Carregar o FastDev: http://brunos-macbook-pro.local:2990/jira/plugins/servlet/fastdev
+	Clicar no Botão Scan e deixar o fastdev fazer o build
+	Fazer o upload do jar do plugin para o servidor
+--------------------------------------------------------------------------------
+Referencias
+
+	https://developer.atlassian.com/display/JIRADEV/Writing+a+JQL+Standalone+Gadget
+	https://developer.atlassian.com/display/DOCS/Developing+a+REST+Service+Plugin
+	https://developer.atlassian.com/static/javadoc/jira/5.0.5/reference/com/atlassian/jira/issue/Issue.html
+	https://developer.atlassian.com/static/javadoc/jira/5.0.5/reference/com/atlassian/jira/issue/status/StatusImpl.html
+	https://developer.atlassian.com/static/javadoc/jira/5.0.5/reference/com/atlassian/jira/issue/fields/CustomField.html
+	https://developer.atlassian.com/static/javadoc/jira/5.0.5/reference/com/atlassian/jira/issue/CustomFieldManager.html
+	https://docs.atlassian.com/jira/latest/com/atlassian/jira/issue/search/SearchResults.html
+	http://mantis.dsin.com.br:8080/plugins/servlet/restbrowser#/
+	http://brunos-macbook-pro.local:2990/jira/plugins/servlet/fastdev
+	https://developer.atlassian.com/display/GADGETS/Including+Features+into+your+Gadget
+
+--------------------------------------------------------------------------------
+You have successfully created an Atlassian Plugin!
+
+Here are the SDK commands you'll use immediately:
+
+* atlas-run   -- installs this plugin into the product and starts it on localhost
+* atlas-debug -- same as atlas-run, but allows a debugger to attach at port 5005
+* atlas-cli   -- after atlas-run or atlas-debug, opens a Maven command line window:
+                 - 'pi' reinstalls the plugin into the running product instance
+* atlas-help  -- prints description for all commands in the SDK
+
+Full documentation is always available at:
+
+https://developer.atlassian.com/display/DOCS/Introduction+to+the+Atlassian+Plugin+SDK

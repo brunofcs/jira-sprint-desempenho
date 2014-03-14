@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+    <ModulePrefs title="DSIN Desempenho Sprint" directory_title="DSIN Desempenho de Sprint"
+        description="DSIN Desempenho de Sprint">
+        <Optional feature="gadget-directory">
+            <Param name="categories">
+                JIRA
+            </Param>
+        </Optional>
+        <Optional feature="atlassian.util" />
+        <Optional feature="auth-refresh" />
+        <Require feature="views" />
+        <Require feature="settitle"/>
+        <Require feature="dynamic-height"/>
+        <Require feature="oauthpopup" />
+        #oauth
+    </ModulePrefs>
+    <Content type="html" view="profile">
+        <![CDATA[
+        #requireResource("com.atlassian.jira.gadgets:common")
+        #includeResources()
+        <script type="text/javascript">
+            (function () {
+                var gadget = AJS.Gadget({
+                    baseUrl: "__ATLASSIAN_BASE_URL__",
+                    useOauth: "/rest/myrestresource/1.0/currentUser",
+                    view: {
+                        template: function(args) {
+                            var gadget = this;
+                            var projectList = AJS.$("<div/>").attr({style: "overflow-y: auto; padding: 10px; height: 90%;"});
+
+                            for (var property in args.projectData.sprints) {
+                                if (args.projectData.sprints.hasOwnProperty(property)) {
+
+                                    var porcentagem = (((args.projectData.sprints[property].spent + args.projectData.sprints[property].newEstimate) / args.projectData.sprints[property].estimate)-1)*100;
+
+                                    var max = 100;
+                                    if(Math.abs(porcentagem) > 100)
+                                        max = Math.abs(porcentagem);
+
+                                    var color = 100;
+                                    if(porcentagem < 0)
+                                        color = 0;
+                                    else
+                                        color = porcentagem;
+
+                                    projectList.append(
+                                        AJS.$("<h5/>").text(property)
+                                    ).append(
+
+                                        AJS.$("<span/>").attr({style: "width: 50%;"}).text(" Início: " + args.projectData.sprints[property].startDate)
+                                            .append(AJS.$("<span/>").attr({style: "width: 50%;"}).text(" Fim: " + args.projectData.sprints[property].endDate))
+
+                                    ).append(
+                                        AJS.$("<div/>").append(
+                                            AJS.$("<meter/>").attr({value: args.projectData.sprints[property].spent,
+                                                                    min: 0,
+                                                                    max: args.projectData.sprints[property].estimate})
+                                        ).append(AJS.$("<span/>").text(  ((args.projectData.sprints[property].spent / args.projectData.sprints[property].estimate)*100).toFixed(2) + "%"    ))
+
+                                    );
+
+                                    projectList.append(
+                                        AJS.$("<div/>").append(
+                                            AJS.$("<meter/>").attr({value: Math.abs(porcentagem),
+                                                                    min: 0,
+                                                                    max: max,
+                                                                    low: color-1})
+                                        ).append(AJS.$("<span/>").text(Math.abs(porcentagem).toFixed(2) + "%"))
+                                    );
+                                }
+                            }
+
+                            gadget.getView().html(projectList);
+
+                            gadgets.window.adjustHeight();
+                        },
+                        args: [{
+                            key: "projectData",
+                            ajaxOptions: function() {
+                                return {
+                                    url: "/rest/myrestresource/1.0/message.json"
+                                };
+                            }
+                        }]
+                    }
+                });
+            })();
+        </script>
+        ]]>
+    </Content>
+ </Module>
